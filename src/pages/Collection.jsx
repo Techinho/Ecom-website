@@ -14,7 +14,7 @@ const Collection = () => {
   const toggleCategory=(e)=>{
 
     if (category.includes(e.target.value)) {
-      setCategory(prev=>prev.filter(item=>item !==target.value))
+      setCategory(prev=>prev.filter(item=>item !==e.target.value))
       
     }
     else{
@@ -31,9 +31,26 @@ const Collection = () => {
   }
   }
 
+  const applyFilter=()=>{
+    let productsCopy=products.slice()
+
+    if(category.length>0){
+      productsCopy=productsCopy.filter(item=>category.includes(item.category))
+    }
+    if(subCategory.length>0){
+      productsCopy=productsCopy.filter(item=>subCategory.includes(item.subCategory))
+    }
+    setFilterProduct(productsCopy)
+    
+  }
+
   useEffect(()=>{
     setFilterProduct(products)
   },[])
+
+  useEffect(()=>{
+    applyFilter()
+  },[category,subCategory])
 
   useEffect(()=>{
     console.log(category)
@@ -71,15 +88,15 @@ const Collection = () => {
           <p className='mb-3 text-sm font-medium'>TYPE</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
             <p className='gap-2 flex'>
-              <input className='w-3' type='checkbox' value={"TopWear"} />
+              <input className='w-3' type='checkbox' value={"Topwear"} onChange={toggleSubCategory}/>
               TopWear
             </p>
             <p className='gap-2 flex'>
-              <input className='w-3' type='checkbox' value={"BottomWear"} />
+              <input className='w-3' type='checkbox' value={"Bottomwear"} onChange={toggleSubCategory} />
               BottomWear
             </p>
             <p className='gap-2 flex'>
-              <input className='w-3' type='checkbox' value={"WinterWear"} />
+              <input className='w-3' type='checkbox' value={"Winterwear"} onChange={toggleSubCategory} />
               WinterWear
             </p>
           </div>
@@ -91,10 +108,10 @@ const Collection = () => {
         <div className="flex justify-between text-base sm:text-2xl mb-4">
           <Title text1="  ALL" text2="COLLECTIONS"/>
           {/* Product Sort */}
-          <select className="border borde-gray-300 text-sm px-2">
-            <option value="relebant">Sort by : relevent</option>
-            <option value="low-hight">Sort by : low to hight</option>
-            <option value="hight-low">Sort by : hight to low </option>
+          <select className="border borde-gray-300 text-sm px-2" onChange={setSubCategorie}>
+            <option value="relebant" >Sort by : relevent</option>
+            <option value="low-hight" >Sort by : low to hight</option>
+            <option value="hight-low" >Sort by : hight to low </option>
 
           </select>
 
