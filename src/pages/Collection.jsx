@@ -4,12 +4,14 @@ import { assets } from "../assets/assets";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
+
 const Collection = () => {
   const { products } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filterProduct,setFilterProduct]=useState([])
   const [category,setCategory]=useState([])
   const [subCategory,setSubCategorie]=useState([])
+  const [sortType,setSortType]=useState("relevant")
 
   const toggleCategory=(e)=>{
 
@@ -43,6 +45,20 @@ const Collection = () => {
     setFilterProduct(productsCopy)
     
   }
+  const sortProduct=()=>{
+    let fpCopy=filterProduct.slice()
+    switch(sortType){
+      case "low-high" :
+        setFilterProduct(fpCopy.sort((a,b)=>(a.price - b.price)))
+        break
+      case "high-low":
+        setFilterProduct(fpCopy.sort((a,b)=>(b.price-a.price)))
+        break
+      default:
+        applyFilter()
+        break
+    }
+  }
 
   useEffect(()=>{
     setFilterProduct(products)
@@ -55,6 +71,10 @@ const Collection = () => {
   useEffect(()=>{
     console.log(category)
   },[category])
+
+  useEffect(()=>{
+    sortProduct()
+  },[sortType])
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
@@ -108,10 +128,10 @@ const Collection = () => {
         <div className="flex justify-between text-base sm:text-2xl mb-4">
           <Title text1="  ALL" text2="COLLECTIONS"/>
           {/* Product Sort */}
-          <select className="border borde-gray-300 text-sm px-2" onChange={setSubCategorie}>
-            <option value="relebant" >Sort by : relevent</option>
-            <option value="low-hight" >Sort by : low to hight</option>
-            <option value="hight-low" >Sort by : hight to low </option>
+          <select  className="border borde-gray-300 text-sm px-2" onChange={(e)=>setSortType(e.target.value)}>
+            <option value="relevant" >Sort by : relevent</option>
+            <option value="low-high" >Sort by : low to hight</option>
+            <option value="high-low" >Sort by : hight to low </option>
 
           </select>
 
