@@ -10,7 +10,7 @@ import RelatedProducts from "../components/RelatedProducts";
 // Composant principal pour afficher les détails d'un produit
 const Product = () => {
   const { productId } = useParams(); // Récupère l'ID du produit à partir des paramètres de l'URL
-  const { products, currency } = useContext(ShopContext); // Récupère les produits et la devise via le contexte global
+  const { products, currency,addToCart} = useContext(ShopContext); // Récupère les produits et la devise via le contexte global
   const [productData, setProductData] = useState({}); // Stocke les données du produit actuel
   const [image, setImage] = useState(""); // Stocke l'image principale à afficher
   const [size, setSize] = useState(""); // Stocke la taille sélectionnée
@@ -97,7 +97,7 @@ const Product = () => {
           </div>
 
           {/* Bouton pour ajouter au panier */}
-          <button className='py-3 px-8 bg-black text-sm text-white active:bg-gray-700'>
+          <button onClick={()=>addToCart(productData._id,size)} className='py-3 px-8 bg-black text-sm text-white active:bg-gray-700'>
             ADD TO CARD
           </button>
 
