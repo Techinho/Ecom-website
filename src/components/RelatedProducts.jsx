@@ -49,7 +49,7 @@ const RelatedProducts = () => {
         {RelatedProduct.length > 0 ? (
           RelatedProduct.map((item, index) => (
             <ProductItem
-             onclick={window.scrollTo({ top: 0, behavior: 'smooth' })}
+             
               key={index}
               id={item._id}
               img={item.image[0]}
