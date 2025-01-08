@@ -4,7 +4,6 @@ import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import * as Tabs from "@radix-ui/react-tabs"; 
 import { Box, Text } from "@radix-ui/themes";
-import Title  from "../components/Title";
 import RelatedProducts from "../components/RelatedProducts";
 
 // Composant principal pour afficher les détails d'un produit

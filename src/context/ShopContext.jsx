@@ -18,7 +18,9 @@ const ShopContextProvider = (props) => {
   const addToCart = async (itemId, size) => {  
     // Check wach user 3ammar size  
     if (!size) {  
-      toast.error("Select Product Size"); // Notification ila ma3ammar size  
+      toast.error("Select Product Size");
+      return;
+       // Notification ila ma3ammar size  
     } else {  
       toast.success("Product added to cart"); // Notification success  
     }  
@@ -45,6 +47,7 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);  
   };  
 
+
   // Fonction li kat-return total items  
   const getCartCount = () => {  
     let totalCount = 0;  
@@ -66,7 +69,14 @@ const ShopContextProvider = (props) => {
   // Hna kan-monitoriw changes dyal cartItems  
   useEffect(() => {  
     console.log(cartItems); // Kan-affichiwn state dyal cart  
-  }, [cartItems]);  
+  }, [cartItems]); 
+  
+  const updateQuantity =async(itemId,size,quantity)=>{
+    let cartData =structuredClone(cartItems)
+    cartData[itemId][size]=quantity
+    setCartItems(cartData)
+
+  }
 
   // Lvalues dyal context li ghadi nkhdm bihom fles composants  
   const value = {  
@@ -79,7 +89,7 @@ const ShopContextProvider = (props) => {
     setShowSearch,  
     cartItems,  
     addToCart,  
-    getCartCount,  
+    getCartCount, updateQuantity 
   };  
 
   // Wrapping children components f ShopContext.Provider  

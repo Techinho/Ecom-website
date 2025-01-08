@@ -1,92 +1,62 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import { ShopContext } from '../context/ShopContext';
+import Title from '../components/Title';
+import { assets } from '../assets/assets';
 
 const Cart = () => {
-  return (
-    <div>
-      {/* container */}
-      <div class="bg-gray-100 h-screen py-8">
-        <div class="container mx-auto px-4">
-          {/* Titre dyal l'cart */}
-          <h1 class="text-2xl font-semibold mb-4">Shopping Cart</h1>
-          <div class="flex flex-col md:flex-row gap-4">
-            <div class="md:w-3/4">
-              <div class="bg-white rounded-lg shadow-md p-6 mb-4">
-                {/* Table dyal l'products fi cart */}
-                <table class="w-full">
-                  <thead>
-                    <tr>
-                      <th class="text-left font-semibold">Product</th>
-                      <th class="text-left font-semibold">Price</th>
-                      <th class="text-left font-semibold">Quantity</th>
-                      <th class="text-left font-semibold">Total</th>
-                    </tr>
-                  </thead>
-                  
-                  <tbody>
-                    {/* product */}
-                    <tr>
-                      <td class="py-4">
-                        <div class="flex items-center">
-                          {/* Image dyal product */}
-                          <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image"></img>
-                          {/* product name */}
-                          <span class="font-semibold">Product name</span>
-                        </div>
-                      </td>
-                      {/* Taman dyal product */}
-                      <td class="py-4">$19.99</td>
-                      <td class="py-4">
-                        {/* Boutons dyal la quantite */}
-                        <div class="flex items-center">
-                          <button class="border rounded-md py-2 px-4 mr-2">-</button>
-                          <span class="text-center w-8">1</span>
-                          <button class="border rounded-md py-2 px-4 ml-2">+</button>
-                        </div>
-                      </td>
-                      {/* Total dyal had l'product */}
-                      <td class="py-4">$19.99</td>
-                    </tr>
-                    {/* More product rows can be added */}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+  const { products, currency, cartItems,updateQuantity } = useContext(ShopContext);
+  const [cartData, setCartData] = useState([]);
 
-            {/* Hadi summary dyal lcart */}
-            <div class="md:w-1/4">
-              <div class="bg-white rounded-lg shadow-md p-6">
-                {/* Summary section */}
-                <h2 class="text-lg font-semibold mb-4">Summary</h2>
-                <div class="flex justify-between mb-2">
-                  {/* Subtotal */}
-                  <span>Subtotal</span>
-                  <span>$19.99</span>
+  useEffect(() => {
+    const tempData = [];
+
+    // Loop through cartItems to construct tempData
+    for (const items in cartItems) {
+      for (const item in cartItems[items]) {
+        if (cartItems[items][item] > 0) {
+          tempData.push({
+            _id: items,
+            size: item,
+            quantite: cartItems[items][item],
+          });
+        }
+      }
+    }
+
+    // Update state and localStorage synchronously after processing
+    setCartData(tempData);
+    localStorage.setItem('cartItem', JSON.stringify(tempData));
+  }, [cartItems]);
+
+  return (
+    <div className='border-t pt-14' >
+      <div className='text-2xl mb-3'>
+        <Title text1={"YOUR"} text2={"CART"} />
+      </div>
+      <div>
+        {
+          cartData.map((item,index)=>{
+            const productData=products.find((product)=>product._id ===item._id)
+            return(
+              <div key={index} className='py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 ' >
+                <div className='flex items-start gap-6'>
+                  <img className='w-16 sm:w-20' src={productData.image[0]} alt="" />
+                  <div>
+                    <p className='text-xs sm:text-lg font-medium'  >{productData.name} </p>
+                    <div className='flex items-center gap-5 mt-2' >
+                      <p>{currency}{productData.price}</p>
+                      <p className='px-2 sm:px-3 sm:py-1 border  bg-slate-50 font-medium'>{item.size}</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="flex justify-between mb-2">
-                  {/* Taxes */}
-                  <span>Taxes</span>
-                  <span>$1.99</span>
-                </div>
-                <div class="flex justify-between mb-2">
-                  {/* Shipping */}
-                  <span>Shipping</span>
-                  <span>$0.00</span>
-                </div>
-                <hr class="my-2"></hr>
-                <div class="flex justify-between mb-2">
-                  {/* Total */}
-                  <span class="font-semibold">Total</span>
-                  <span class="font-semibold">$21.98</span>
-                </div>
-                {/* Button Checkout */}
-                <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                <input onChange={(e)=>{e.target.value===""||e.target.value === 0 ? null :updateQuantity(item._id,item.size,Number(e.target.value))}} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number" min={1} defaultValue={item.quantite} />
+              <img onClick={()=>{updateQuantity(item._id,item.size,0)}} className='w-4 mr-4 sm:w-5 cursor-pointer ' src={assets.bin_icon} alt="" />
               </div>
-            </div>
-          </div>
-        </div>
+            )
+          })
+        }
       </div>
     </div>
   )
 }
-
-export default Cart
+export default Cart;
