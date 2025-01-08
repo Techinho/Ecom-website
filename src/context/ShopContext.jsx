@@ -18,9 +18,8 @@ const ShopContextProvider = (props) => {
   const addToCart = async (itemId, size) => {  
     // Check wach user 3ammar size  
     if (!size) {  
-      toast.error("Select Product Size");
+      toast.error("Select Product Size"); // Notification error
       return;
-       // Notification ila ma3ammar size  
     } else {  
       toast.success("Product added to cart"); // Notification success  
     }  
@@ -47,7 +46,6 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);  
   };  
 
-
   // Fonction li kat-return total items  
   const getCartCount = () => {  
     let totalCount = 0;  
@@ -66,17 +64,35 @@ const ShopContextProvider = (props) => {
     return totalCount; // Return total count  
   };  
 
+  // Fonction li kat-return total amount dyal items f cart  
+  const getCartAmount = () => {  
+    let totalAmount = 0;  
+    for (const items in cartItems) {  
+      let itemInfo = products.find((product) => product._id === items);  
+      for (const item in cartItems[items]) {  
+        try {  
+          if (cartItems[items][item] > 0) {  
+            totalAmount += itemInfo.price * cartItems[items][item];  
+          }  
+        } catch (error) {  
+          console.log(error);  
+        }  
+      }  
+    }  
+    return totalAmount; // Return total amount  
+  };  
+
   // Hna kan-monitoriw changes dyal cartItems  
   useEffect(() => {  
     console.log(cartItems); // Kan-affichiwn state dyal cart  
-  }, [cartItems]); 
-  
-  const updateQuantity =async(itemId,size,quantity)=>{
-    let cartData =structuredClone(cartItems)
-    cartData[itemId][size]=quantity
-    setCartItems(cartData)
+  }, [cartItems]);  
 
-  }
+  // Update quantity dyal item f cart  
+  const updateQuantity = async (itemId, size, quantity) => {  
+    let cartData = structuredClone(cartItems);  
+    cartData[itemId][size] = quantity;  
+    setCartItems(cartData);  
+  };
 
   // Lvalues dyal context li ghadi nkhdm bihom fles composants  
   const value = {  
@@ -89,7 +105,9 @@ const ShopContextProvider = (props) => {
     setShowSearch,  
     cartItems,  
     addToCart,  
-    getCartCount, updateQuantity 
+    getCartCount,  
+    updateQuantity,  
+    getCartAmount  
   };  
 
   // Wrapping children components f ShopContext.Provider  
