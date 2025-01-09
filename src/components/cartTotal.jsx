@@ -37,6 +37,10 @@ const CartTotal = () => {
               : getCartAmount() + delivery_fee} {currency}
           </b>
         </div>
+        <div className='w-full text-end '>
+          <button className='bg-black px-4 py-2 text-white text-sm rounded my-8 uppercase'>Procced to checkout</button>
+
+        </div>
       </div>
     </div>
   );

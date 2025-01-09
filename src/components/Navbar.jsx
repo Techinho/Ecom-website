@@ -6,6 +6,7 @@ import {useState }from 'react'
 import { ShopContext } from '../context/ShopContext'
 
 
+
 const Navbar = () => {
 
   const pathname =useLocation().pathname
@@ -33,7 +34,6 @@ const Navbar = () => {
             <p>CONTACT</p>
             <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
           </NavLink>
-       
         </ul>
         <div className='flex items-center gap-6'>
           {pathname.includes("collection")&& <img onClick={()=>setShowSearch(true)} src={assets.search_icon} alt="searchicon" className='w-5 cursor-pointer' />}
