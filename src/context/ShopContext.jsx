@@ -108,7 +108,9 @@ const ShopContextProvider = (props) => {
     getCartCount,  
     updateQuantity,  
     getCartAmount  
-  };  
+  }; 
+  
+  
 
   // Wrapping children components f ShopContext.Provider  
   return (  

@@ -4,9 +4,12 @@ import Title from '../components/Title';
 import { assets } from '../assets/assets';
 import CartTotal from '../components/cartTotal';
 
+
 const Cart = () => {
+
+
   // Hna kanjibo data mn ShopContext
-  const { products, currency, cartItems, updateQuantity } = useContext(ShopContext);
+const { products, currency, cartItems, updateQuantity } = useContext(ShopContext);
   
   // State bach ndiro update dyal data dyal cart
   const [cartData, setCartData] = useState([]);

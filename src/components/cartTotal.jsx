@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import Title from './Title';
+import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify"; 
 
 const CartTotal = () => {
   const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
+  const navigate=useNavigate()
 
   return (
     <div className='w-full'>
@@ -38,7 +41,7 @@ const CartTotal = () => {
           </b>
         </div>
         <div className='w-full text-end '>
-          <button className='bg-black px-4 py-2 text-white text-sm rounded my-8 uppercase'>Procced to checkout</button>
+          <button onClick={()=>{getCartAmount()>0?navigate('/place-order'):toast.error("Your Cart is empty")}} className='bg-black px-4 py-2 text-white text-sm rounded my-8 uppercase'>Procced to checkout</button>
 
         </div>
       </div>
