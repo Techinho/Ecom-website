@@ -1,12 +1,12 @@
-import { HStack, Icon } from "@chakra-ui/react"
-import {
-  RadioCardItem,
-  RadioCardLabel,
-  RadioCardRoot,
-} from "../ui/radio-card"
-import { RiAppleFill, RiBankCardFill, RiPaypalFill } from "react-icons/ri"
+import { useContext } from "react";
+import { HStack, Icon } from "@chakra-ui/react";
+import { RadioCardItem, RadioCardLabel, RadioCardRoot } from "../ui/radio-card";
+import { RiCashFill, RiBankCardFill, RiPaypalFill } from "react-icons/ri";
+import { ShopContext } from "../../context/ShopContext";
 
 const Choices = () => {
+  const { choice, HandleChoices } = useContext(ShopContext);
+
   return (
     <RadioCardRoot
       orientation="horizontal"
@@ -15,10 +15,12 @@ const Choices = () => {
       maxW="lg"
       defaultValue="paypal"
     >
-      <RadioCardLabel>Payment method</RadioCardLabel>
-      <HStack  align="stretch">
+     
+      <HStack align="stretch">
         {items.map((item) => (
-          <RadioCardItem className="cursor-pointer border border-gray-200"
+          <RadioCardItem
+            className="cursor-pointer border border-gray-200"
+            onClick={() => HandleChoices(item.value)}
             label={item.title}
             icon={
               <Icon fontSize="2xl" color="fg.subtle">
@@ -32,13 +34,13 @@ const Choices = () => {
         ))}
       </HStack>
     </RadioCardRoot>
-  )
-}
+  );
+};
 
 const items = [
   { value: "paypal", title: "Paypal", icon: <RiPaypalFill /> },
-  { value: "apple-pay", title: "Apple Pay", icon: <RiAppleFill /> },
+  { value: "apple-pay", title: "Cash ON Delivery", icon: <RiCashFill /> },
   { value: "card", title: "Card", icon: <RiBankCardFill /> },
-]
+];
 
-export default Choices
+export default Choices;

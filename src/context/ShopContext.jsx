@@ -94,6 +94,15 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);  
   };
 
+
+  const [choice,setChoice]=useState("")
+
+
+    const HandleChoices=(value)=>{
+      setChoice(value)
+    }
+
+  
   // Lvalues dyal context li ghadi nkhdm bihom fles composants  
   const value = {  
     products,  
@@ -107,7 +116,8 @@ const ShopContextProvider = (props) => {
     addToCart,  
     getCartCount,  
     updateQuantity,  
-    getCartAmount  
+    getCartAmount,
+    setChoice,choice,HandleChoices  
   }; 
   
   
