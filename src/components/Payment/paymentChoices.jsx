@@ -39,8 +39,9 @@ const Choices = () => {
 
 const items = [
   { value: "paypal", title: "Paypal", icon: <RiPaypalFill /> },
-  { value: "apple-pay", title: "Cash ON Delivery", icon: <RiCashFill /> },
   { value: "card", title: "Card", icon: <RiBankCardFill /> },
+  { value: "apple-pay", title: "Cash ON Delivery", icon: <RiCashFill /> }
+ 
 ];
 
 export default Choices;

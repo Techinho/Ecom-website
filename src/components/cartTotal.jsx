@@ -41,8 +41,7 @@ const CartTotal = () => {
           </b>
         </div>
         <div className='w-full text-end '>
-          <button onClick={()=>{getCartAmount()>0?navigate('/place-order'):toast.error("Your Cart is empty")}} className='bg-black px-4 py-2 text-white text-sm rounded my-8 uppercase '>Procced to checkout</button>
-
+          <button onClick={()=>{getCartAmount()>0?navigate('/place-order'):toast.error("Your Cart is empty")}} className={`bg-black px-4 py-2 text-white text-sm rounded my-8 uppercase ${location.pathname.includes("order")?"hidden" :""}`}>Procced to checkout</button>
         </div>
       </div>
     </div>

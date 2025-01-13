@@ -102,6 +102,8 @@ const ShopContextProvider = (props) => {
       setChoice(value)
     }
 
+
+    
   
   // Lvalues dyal context li ghadi nkhdm bihom fles composants  
   const value = {  
